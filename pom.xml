@@ -19,8 +19,8 @@
     </properties>
 
     <modules>
-        <module>application</module>
         <module>core-lib</module>
+        <module>wallet-service</module>
     </modules>
 
 </project>
