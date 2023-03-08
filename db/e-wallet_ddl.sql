@@ -9,8 +9,8 @@ CREATE TABLE users (
        id bigint NOT NULL,
        deleted bool NOT NULL,
        email varchar(255) NOT NULL,
-       first_name varchar(255) NOT NULL,
-       last_name varchar(255) NOT NULL,
+       name varchar(255) NOT NULL,
+       surname varchar(255) NOT NULL,
        password varchar(255) NULL,
        CONSTRAINT uk_6dotkott2kjsp8vw4d0m25fb7 UNIQUE (email),
        CONSTRAINT users_pkey PRIMARY KEY (id)

@@ -1,2 +1,0 @@
-INSERT INTO users (ID,EMAIL,FIRST_NAME,LAST_NAME,PASSWORD,DELETED) VALUES
-    (nextval('user_seq'),'semihkirdinli@gmail.com','Semih','Kirdinli','$2a$10$Tx79lr3lF/TskKTxUvVhBeJ0fWWT7pR.5dHqIu8LAUP9Hm0exxvQi', false);
