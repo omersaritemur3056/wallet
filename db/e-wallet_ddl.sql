@@ -5,27 +5,72 @@ CREATE SCHEMA public AUTHORIZATION postgres;
 GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO public;
 
-CREATE TABLE users (
-       id bigint NOT NULL,
-       deleted bool NOT NULL,
-       email varchar(255) NOT NULL,
-       name varchar(255) NOT NULL,
-       surname varchar(255) NOT NULL,
-       password varchar(255) NULL,
-       CONSTRAINT uk_6dotkott2kjsp8vw4d0m25fb7 UNIQUE (email),
-       CONSTRAINT users_pkey PRIMARY KEY (id)
+create sequence user_seq
+    increment by 50;
+
+alter sequence user_seq owner to postgres;
+
+create sequence wallet_seq
+    increment by 50;
+
+alter sequence wallet_seq owner to postgres;
+
+create sequence wallet_transaction_seq
+    increment by 50;
+
+alter sequence wallet_transaction_seq owner to postgres;
+
+create table users
+(
+    id         bigint       not null
+        primary key,
+    created_at timestamp    not null,
+    email      varchar(255) not null
+        constraint uk_6dotkott2kjsp8vw4d0m25fb7
+            unique,
+    name       varchar(255) not null,
+    password   varchar(255) not null,
+    surname    varchar(255) not null,
+    updated_at timestamp
 );
 
-ALTER TABLE users OWNER TO postgres;
-GRANT ALL ON TABLE users TO postgres;
+alter table users
+    owner to postgres;
 
-CREATE SEQUENCE user_seq
-    INCREMENT BY 50
-    MINVALUE 1
-    MAXVALUE 9223372036854775807
-    START 1
-    CACHE 1
-    NO CYCLE;
+create table wallet
+(
+    id         bigint         not null
+        primary key,
+    balance    numeric(19, 2) not null,
+    created_at timestamp      not null,
+    name       varchar(255)   not null,
+    updated_at timestamp,
+    user_id    bigint
+        constraint fkgbusavqq0bdaodex4ee6v0811
+            references users
+);
 
-ALTER SEQUENCE user_seq OWNER TO postgres;
-GRANT ALL ON SEQUENCE user_seq TO postgres;
+alter table wallet
+    owner to postgres;
+
+create table wallet_transaction
+(
+    id                 bigint         not null
+        primary key,
+    amount             numeric(19, 2) not null,
+    created_at         timestamp      not null,
+    description        varchar(255),
+    transaction_id     uuid           not null,
+    transaction_type   varchar(255)   not null,
+    updated_at         timestamp,
+    receiver_wallet_id bigint
+        constraint fkjuuknji4hqtrpnvelvykw5p81
+            references wallet,
+    sender_wallet_id   bigint
+        constraint fk7cm6foxo3fukbja3tbph5pxqa
+            references wallet
+);
+
+alter table wallet_transaction
+    owner to postgres;
+
