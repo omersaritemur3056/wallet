@@ -4,7 +4,6 @@ import com.wallet.core.enums.TransactionType;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,14 +22,14 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
-public class WalletTransaction  {
+public class WalletTransaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "wallet_transaction_gen")
     @SequenceGenerator(name = "wallet_transaction_gen", sequenceName = "wallet_transaction_seq")
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private UUID transactionId = UUID.randomUUID();
 
     @Column(nullable = false)
@@ -46,10 +45,6 @@ public class WalletTransaction  {
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private Date createdAt;
-
-    @UpdateTimestamp
-    @Column(insertable = false)
-    private Date updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Wallet senderWallet;

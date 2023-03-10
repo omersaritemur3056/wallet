@@ -20,7 +20,7 @@ create sequence wallet_transaction_seq
 
 alter sequence wallet_transaction_seq owner to postgres;
 
-create table users
+create table public.users
 (
     id         bigint       not null
         primary key,
@@ -34,10 +34,10 @@ create table users
     updated_at timestamp
 );
 
-alter table users
+alter table public.users
     owner to postgres;
 
-create table wallet
+create table public.wallet
 (
     id         bigint         not null
         primary key,
@@ -47,13 +47,13 @@ create table wallet
     updated_at timestamp,
     user_id    bigint
         constraint fkgbusavqq0bdaodex4ee6v0811
-            references users
+            references public.users
 );
 
-alter table wallet
+alter table public.wallet
     owner to postgres;
 
-create table wallet_transaction
+create table public.wallet_transaction
 (
     id                 bigint         not null
         primary key,
@@ -62,15 +62,13 @@ create table wallet_transaction
     description        varchar(255),
     transaction_id     uuid           not null,
     transaction_type   varchar(255)   not null,
-    updated_at         timestamp,
     receiver_wallet_id bigint
         constraint fkjuuknji4hqtrpnvelvykw5p81
-            references wallet,
+            references public.wallet,
     sender_wallet_id   bigint
         constraint fk7cm6foxo3fukbja3tbph5pxqa
-            references wallet
+            references public.wallet
 );
 
-alter table wallet_transaction
+alter table public.wallet_transaction
     owner to postgres;
-

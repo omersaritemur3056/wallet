@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 
-@ComponentScan(value = "com.wallet.core")
 @EntityScan(value = "com.wallet.core")
 @SpringBootApplication
 public class WalletServiceApplication {
