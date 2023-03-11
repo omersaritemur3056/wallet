@@ -55,13 +55,16 @@ alter table public.wallet
 
 create table public.wallet_transaction
 (
-    id                 bigint         not null
+    id                 bigint                                               not null
         primary key,
-    amount             numeric(19, 2) not null,
-    created_at         timestamp      not null,
+    amount             numeric(19, 2)                                       not null,
+    created_at         timestamp                                            not null,
     description        varchar(255),
-    transaction_id     uuid           not null,
-    transaction_type   varchar(255)   not null,
+    transaction_id     uuid                                                 not null
+        constraint uk_t2bo7umq66dt8cqw7xxnblwoy
+            unique,
+    transaction_type   varchar(255)                                         not null,
+    transaction_status varchar(255) default 'PROCESSING'::character varying not null,
     receiver_wallet_id bigint
         constraint fkjuuknji4hqtrpnvelvykw5p81
             references public.wallet,
@@ -69,6 +72,11 @@ create table public.wallet_transaction
         constraint fk7cm6foxo3fukbja3tbph5pxqa
             references public.wallet
 );
+
+alter table public.wallet_transaction
+    owner to postgres;
+
+
 
 alter table public.wallet_transaction
     owner to postgres;

@@ -1,5 +1,6 @@
 package com.wallet.core.model;
 
+import com.wallet.core.enums.TransactionStatus;
 import com.wallet.core.enums.TransactionType;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,6 +36,10 @@ public class WalletTransaction {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TransactionStatus transactionStatus = TransactionStatus.PROCESSING;
 
     @Column
     private String description;
