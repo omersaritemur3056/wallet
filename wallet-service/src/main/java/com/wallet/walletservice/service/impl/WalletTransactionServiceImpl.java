@@ -71,6 +71,20 @@ public class WalletTransactionServiceImpl implements WalletTransactionService {
         walletTransaction.setTransactionStatus(COMPLETED);
     }
 
+    private void deposit(WalletTransaction walletTransaction) {
+        validateReceiverRequest(walletTransaction);
+
+        var walletId = walletTransaction.getReceiverWallet().getId();
+        var wallet = walletService.find(walletId);
+        if(Objects.isNull(wallet)) {
+            throw new WalletNotFoundException(String.format("Wallet not found with id -> [%s]", walletId));
+        }
+
+        walletService.deposit(walletId, walletTransaction.getAmount());
+        log.info("Wallet deposit operation succeeded with transactionId -> [{}]", walletTransaction.getTransactionId());
+        walletTransaction.setTransactionStatus(COMPLETED);
+    }
+
     private void validateSenderRequest(WalletTransaction walletTransaction) {
         if(walletTransaction.getSenderWallet() == null
                 || walletTransaction.getSenderWallet().getId() == null
@@ -87,20 +101,6 @@ public class WalletTransactionServiceImpl implements WalletTransactionService {
                 || walletTransaction.getAmount().compareTo(BigDecimal.ZERO) < 0)  {
             throw new TransactionRequestNotValidException();
         }
-    }
-
-    private void deposit(WalletTransaction walletTransaction) {
-        validateReceiverRequest(walletTransaction);
-
-        var walletId = walletTransaction.getReceiverWallet().getId();
-        var wallet = walletService.find(walletId);
-        if(Objects.isNull(wallet)) {
-            throw new WalletNotFoundException(String.format("Wallet not found with id -> [%s]", walletId));
-        }
-
-        walletService.deposit(walletId, walletTransaction.getAmount());
-        log.info("Wallet deposit operation succeeded with transactionId -> [{}]", walletTransaction.getTransactionId());
-        walletTransaction.setTransactionStatus(COMPLETED);
     }
 
     private void transfer() {

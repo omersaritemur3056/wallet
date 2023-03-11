@@ -2,6 +2,7 @@ package com.wallet.walletservice.service.impl;
 
 import com.wallet.core.exception.EntityNotFoundException;
 import com.wallet.core.model.Wallet;
+import com.wallet.walletservice.exception.WalletDeleteException;
 import com.wallet.walletservice.exception.WalletBalanceUpdateException;
 import com.wallet.walletservice.repository.WalletRepository;
 import com.wallet.walletservice.service.WalletService;
@@ -24,6 +25,11 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     public void delete(Long id) {
+        var wallet = getWallet(id);
+        if(wallet.getBalance().compareTo(BigDecimal.ZERO) > 0) {
+            throw new WalletDeleteException("Delete operation cannot be performed because the wallet has a balance. id -> " + id);
+        }
+
         walletRepository.deleteById(id);
     }
 
@@ -34,6 +40,10 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     public Wallet find(Long id) {
+        return getWallet(id);
+    }
+
+    private Wallet getWallet(Long id) {
         return walletRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Wallet not found with id -> " + id));
     }
