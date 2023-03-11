@@ -2,8 +2,8 @@ package com.wallet.walletservice.service.impl;
 
 import com.wallet.core.exception.EntityNotFoundException;
 import com.wallet.core.model.Wallet;
-import com.wallet.walletservice.exception.WalletDeleteException;
 import com.wallet.walletservice.exception.WalletBalanceUpdateException;
+import com.wallet.walletservice.exception.WalletDeleteException;
 import com.wallet.walletservice.repository.WalletRepository;
 import com.wallet.walletservice.service.WalletService;
 import lombok.RequiredArgsConstructor;

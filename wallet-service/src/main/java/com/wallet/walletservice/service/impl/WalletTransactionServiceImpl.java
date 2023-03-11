@@ -30,9 +30,9 @@ public class WalletTransactionServiceImpl implements WalletTransactionService {
     @Override
     public WalletTransaction create(WalletTransaction walletTransaction) {
         switch (walletTransaction.getTransactionType()) {
-            case TRANSFER -> transfer();
-            case WITHDRAW -> withdraw(walletTransaction);
-            case DEPOSIT -> deposit(walletTransaction);
+            case TRANSFER -> doTransfer(walletTransaction);
+            case WITHDRAW -> doWithdraw(walletTransaction);
+            case DEPOSIT -> doDeposit(walletTransaction);
         }
         return walletTransactionRepository.save(walletTransaction);
     }
@@ -52,8 +52,9 @@ public class WalletTransactionServiceImpl implements WalletTransactionService {
         return walletTransactionRepository.findAllByReceiverWalletId(walletId);
     }
 
-    private void withdraw(WalletTransaction walletTransaction) {
-        validateSenderRequest(walletTransaction);
+    private void doWithdraw(WalletTransaction walletTransaction) {
+        validateSenderWallet(walletTransaction);
+        validateAmount(walletTransaction.getAmount());
 
         var walletId = walletTransaction.getSenderWallet().getId();
         var wallet = walletService.find(walletId);
@@ -71,8 +72,9 @@ public class WalletTransactionServiceImpl implements WalletTransactionService {
         walletTransaction.setTransactionStatus(COMPLETED);
     }
 
-    private void deposit(WalletTransaction walletTransaction) {
-        validateReceiverRequest(walletTransaction);
+    private void doDeposit(WalletTransaction walletTransaction) {
+        validateReceiverWallet(walletTransaction);
+        validateAmount(walletTransaction.getAmount());
 
         var walletId = walletTransaction.getReceiverWallet().getId();
         var wallet = walletService.find(walletId);
@@ -85,25 +87,50 @@ public class WalletTransactionServiceImpl implements WalletTransactionService {
         walletTransaction.setTransactionStatus(COMPLETED);
     }
 
-    private void validateSenderRequest(WalletTransaction walletTransaction) {
-        if(walletTransaction.getSenderWallet() == null
-                || walletTransaction.getSenderWallet().getId() == null
-                || walletTransaction.getAmount() == null
-                || walletTransaction.getAmount().compareTo(BigDecimal.ZERO) < 0)  {
+    private void validateSenderWallet(WalletTransaction walletTransaction) {
+        if(walletTransaction.getSenderWallet() == null || walletTransaction.getSenderWallet().getId() == null)  {
             throw new TransactionRequestNotValidException();
         }
     }
 
-    private void validateReceiverRequest(WalletTransaction walletTransaction) {
-        if(walletTransaction.getReceiverWallet() == null
-                || walletTransaction.getReceiverWallet().getId() == null
-                || walletTransaction.getAmount() == null
-                || walletTransaction.getAmount().compareTo(BigDecimal.ZERO) < 0)  {
+    private void validateReceiverWallet(WalletTransaction walletTransaction) {
+        if(walletTransaction.getReceiverWallet() == null || walletTransaction.getReceiverWallet().getId() == null)  {
             throw new TransactionRequestNotValidException();
         }
     }
 
-    private void transfer() {
+    private void validateAmount(BigDecimal amount) {
+        if(amount == null || amount.compareTo(BigDecimal.ZERO) < 0) {
+            throw new TransactionRequestNotValidException();
+        }
+    }
 
+    private void doTransfer(WalletTransaction walletTransaction) {
+        validateSenderWallet(walletTransaction);
+        validateReceiverWallet(walletTransaction);
+        validateAmount(walletTransaction.getAmount());
+
+        var senderWalletId = walletTransaction.getSenderWallet().getId();
+        var senderWallet = walletService.find(senderWalletId);
+        if(Objects.isNull(senderWallet)) {
+            throw new WalletNotFoundException(String.format("Sender wallet not found with id -> [%s]", senderWalletId));
+        }
+
+        var receiverWalletId = walletTransaction.getReceiverWallet().getId();
+        var receiverWallet = walletService.find(receiverWalletId);
+        if(Objects.isNull(receiverWallet)) {
+            throw new WalletNotFoundException(String.format("Receiver Wallet not found with id -> [%s]", receiverWalletId));
+        }
+
+        var transferAmount = walletTransaction.getAmount();
+        if(senderWallet.getBalance().compareTo(transferAmount) < 0) {
+            throw new InsufficientBalanceException("Wallet balance is insufficient");
+        }
+
+        walletService.withdraw(senderWalletId, transferAmount);
+        walletService.deposit(receiverWalletId, transferAmount);
+
+        log.info("Transfer operation succeeded with transactionId -> [{}]", walletTransaction.getTransactionId());
+        walletTransaction.setTransactionStatus(COMPLETED);
     }
 }
