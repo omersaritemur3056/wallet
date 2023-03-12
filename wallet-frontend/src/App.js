@@ -1,32 +1,41 @@
-import './App.css';
-import HeaderMenu from "./component/HeaderMenu";
-import {Row} from "react-bootstrap";
-import Container from "react-bootstrap/Container";
-import axios from "axios";
-import {useEffect, useState} from "react";
-import WalletList from "./component/WalletList";
+import "./App.css";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+// import screen
+import Dashboard from "./pages/Dashboard";
+import CreateWithdrawPage from "./pages/CreateWithdrawPage";
+import CreateWalletPage from "./pages/CreateWalletPage";
+
+import ListTransactionsPage from "./pages/ListTransactionsPage";
+
+import Login from "./pages/Login";
+
+
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <Dashboard />,
+    },
+    {
+        path: "/create-wallet",
+        element: <CreateWalletPage />,
+    },
+    {
+        path: "/create-withdraw",
+        element: <CreateWithdrawPage />,
+    },
+    {
+        path: "/login",
+        element: <Login/>,
+    },
+    {
+        path: "/wallets/:id",
+        element: <ListTransactionsPage/>,
+    },
+]);
 
 function App() {
-
-    const [wallet, setWallet] = useState([]);
-
-    useEffect(() => {
-        axios.get("http://localhost:9899/api/wallets/list/1")
-            .then((response) => {
-            setWallet(response.data.payload);
-        });
-    }, []);
-
-    return (<div className="App">
-        <HeaderMenu/>
-        <Container>
-            <Container>
-                <Row className={'mt-5'}>
-                    <WalletList wallets={wallet}/>
-                </Row>
-            </Container>
-        </Container>
-    </div>);
+    return <RouterProvider router={router} />;
 }
 
 export default App;
