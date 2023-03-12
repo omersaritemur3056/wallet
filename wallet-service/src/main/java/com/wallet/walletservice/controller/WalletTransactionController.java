@@ -31,7 +31,8 @@ public class WalletTransactionController {
         var walletDebitTransactions = walletTransactionService.findAllDebitByWalletId(walletId);
         var walletCreditTransactions = walletTransactionService.findAllCreditByWalletId(walletId);
 
-        List<WalletTransaction> walletTransactions = Stream.of(walletDebitTransactions, walletCreditTransactions)
+        List<WalletTransaction> walletTransactions =
+                Stream.of(walletDebitTransactions, walletCreditTransactions)
                 .flatMap(Collection::stream)
                 .sorted(Comparator.comparing(WalletTransaction::getCreatedAt).reversed())
                 .toList();

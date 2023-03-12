@@ -9,6 +9,7 @@ import CreateWalletPage from "./pages/CreateWalletPage";
 import ListTransactionsPage from "./pages/ListTransactionsPage";
 
 import Login from "./pages/Login";
+import ListWalletsPage from "./pages/ListWalletsPage";
 
 
 const router = createBrowserRouter([
@@ -17,7 +18,11 @@ const router = createBrowserRouter([
         element: <Dashboard />,
     },
     {
-        path: "/create-wallet",
+        path: "/wallets",
+        element: <ListWalletsPage />,
+    },
+    {
+        path: "/wallets/add",
         element: <CreateWalletPage />,
     },
     {
@@ -26,12 +31,12 @@ const router = createBrowserRouter([
     },
     {
         path: "/login",
-        element: <Login/>,
+        element: <Login />,
     },
     {
         path: "/wallets/:id",
-        element: <ListTransactionsPage/>,
-    },
+        element: <ListTransactionsPage />,
+    }
 ]);
 
 function App() {

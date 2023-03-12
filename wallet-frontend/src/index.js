@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
-import HeaderMenu from "./component/HeaderMenu";
+import HeaderMenu from "./components/HeaderMenu";
 import { Container } from "react-bootstrap";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
