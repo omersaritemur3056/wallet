@@ -4,7 +4,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 // import screen
 import Dashboard from "./pages/Dashboard";
 import CreateWithdrawPage from "./pages/CreateWithdrawPage";
-import CreateWalletPage from "./pages/CreateWalletPage";
 
 import ListTransactionsPage from "./pages/ListTransactionsPage";
 
@@ -22,10 +21,6 @@ const router = createBrowserRouter([
     {
         path: "/wallets",
         element: <ListWalletsPage />,
-    },
-    {
-        path: "/wallets/add",
-        element: <CreateWalletPage />,
     },
     {
         path: "/login",

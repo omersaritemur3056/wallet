@@ -14,7 +14,7 @@ const ListWalletsPage = () => {
   }, []);
 
   return (
-      <Row className={'mt-5'}>
+      <Row className={'mt-5 mb-5'}>
         <WalletList wallets={wallet}/>
       </Row>
   )

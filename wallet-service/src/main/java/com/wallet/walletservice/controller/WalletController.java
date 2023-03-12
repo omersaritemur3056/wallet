@@ -1,5 +1,6 @@
 package com.wallet.walletservice.controller;
 
+import com.wallet.core.model.User;
 import com.wallet.core.model.Wallet;
 import com.wallet.core.rest.Response;
 import com.wallet.walletservice.service.WalletService;
@@ -12,9 +13,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -39,6 +44,14 @@ public class WalletController {
 
     @PostMapping
     ResponseEntity<Response<Wallet>> create(@RequestBody Wallet wallet) {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        String token = request.getHeader("Authorization");
+        Long userId=1L;
+        User user = new User();
+        user.setId(userId);
+        wallet.setUser(user);
+        // TODO: Token is going to be parse.
+
         var responseWallet = walletService.create(wallet);
         return ResponseEntity.ok(Response.success(responseWallet));
     }
