@@ -5,6 +5,7 @@ import com.wallet.core.rest.Response;
 import com.wallet.walletservice.service.WalletTransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,7 @@ import java.util.stream.Stream;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/transactions")
+@CrossOrigin(origins = "http://localhost:3000")
 public class WalletTransactionController {
 
     private final WalletTransactionService walletTransactionService;
