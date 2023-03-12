@@ -20,8 +20,8 @@ function App() {
     return (<div className="App">
         <HeaderMenu/>
         <Container>
-            <Container className={'m-4'}>
-                <Row>
+            <Container>
+                <Row className={'mt-5'}>
                     <WalletList wallets={wallet}/>
                 </Row>
             </Container>
