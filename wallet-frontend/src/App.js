@@ -10,6 +10,8 @@ import ListTransactionsPage from "./pages/ListTransactionsPage";
 
 import Login from "./pages/Login";
 import ListWalletsPage from "./pages/ListWalletsPage";
+import CreateDepositPage from "./pages/CreateDepositPage";
+import CreateTransferPage from "./pages/CreateTransferPage";
 
 
 const router = createBrowserRouter([
@@ -26,16 +28,24 @@ const router = createBrowserRouter([
         element: <CreateWalletPage />,
     },
     {
-        path: "/create-withdraw",
-        element: <CreateWithdrawPage />,
-    },
-    {
         path: "/login",
         element: <Login />,
     },
     {
         path: "/wallets/:id",
         element: <ListTransactionsPage />,
+    },
+    {
+        path: "/wallets/:id/deposit",
+        element: <CreateDepositPage />,
+    },
+    {
+        path: "/wallets/:id/withdraw",
+        element: <CreateWithdrawPage />,
+    },
+    {
+        path: "/wallets/:id/transfer",
+        element: <CreateTransferPage />,
     }
 ]);
 

@@ -16,9 +16,15 @@ function WalletCard(props) {
                         Balance: {props.balance}
                     </Card.Text>
 
-                    <Button variant="success" className={'m-1'}>Deposit</Button>
-                    <Button variant="danger" className={'m-1'}>Withdraw</Button>
-                    <Button variant="primary" className={'m-1'}>Transfer</Button>
+                    <Link to={`/wallets/${props.id}/deposit`}>
+                        <Button variant="success" className={'m-1'}>Deposit</Button>
+                    </Link>
+                    <Link to={`/wallets/${props.id}/withdraw`}>
+                        <Button variant="danger" className={'m-1'}>Withdraw</Button>
+                    </Link>
+                    <Link to={`/wallets/${props.id}/transfer`}>
+                        <Button variant="primary" className={'m-1'}>Transfer</Button>
+                    </Link>
                 </Card.Body>
             </Card>
         </Col>
