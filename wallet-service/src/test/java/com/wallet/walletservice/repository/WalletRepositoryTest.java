@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
 
 import java.math.BigDecimal;
@@ -22,6 +23,7 @@ class WalletRepositoryTest {
     private WalletRepository walletRepository;
 
     @Test
+    @Rollback
     void givenWalletIdAndAmount_whenWithdraw_thenUpdatedCountIsGreaterThanZero() {
         // given - precondition or setup
         var wallet = new Wallet();
@@ -39,6 +41,7 @@ class WalletRepositoryTest {
     }
 
     @Test
+    @Rollback
     void givenWalletIdAndAmount_whenDeposit_thenUpdatedCountIsGreaterThanZero() {
         // given - precondition or setup
         var wallet = new Wallet();
