@@ -46,12 +46,13 @@ public class WalletServiceImpl implements WalletService {
             throw new WalletDeleteException("Delete operation cannot be performed because the wallet has a balance. id -> " + id);
         }
 
-        walletRepository.deleteById(id);
+        wallet.setDeleted(true);
+        walletRepository.save(wallet);
     }
 
     @Override
     public List<Wallet> findAllByUserId(Long userId) {
-        return walletRepository.findAllByUserId(userId);
+        return walletRepository.findAllByUserIdAndDeletedIsFalse(userId);
     }
 
     @Override

@@ -9,6 +9,7 @@ const handleClick = (event, id) => {
     HttpRequestUtil.delete("api/wallets/" + id)
         .then(() => {
             window.location.reload();
+            window.alert("Wallet " + id + " deleted successfully.")
         }).catch((error) => {
         // TODO: Exception message is going to be handle.
         error = "Balance Error!";

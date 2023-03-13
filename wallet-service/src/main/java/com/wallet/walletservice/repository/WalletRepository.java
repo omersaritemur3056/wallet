@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 public interface WalletRepository extends JpaRepository<Wallet, Long> {
-    List<Wallet> findAllByUserId(Long userId);
+    List<Wallet> findAllByUserIdAndDeletedIsFalse(Long userId);
 
     @Modifying
     @Query("update Wallet w set w.balance = (w.balance - :amount), w.updatedAt = CURRENT_TIMESTAMP where w.id = :id")

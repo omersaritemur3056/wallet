@@ -47,7 +47,8 @@ create table public.wallet
     updated_at timestamp,
     user_id    bigint
         constraint fkgbusavqq0bdaodex4ee6v0811
-            references public.users
+            references public.users,
+    deleted    boolean
 );
 
 alter table public.wallet
