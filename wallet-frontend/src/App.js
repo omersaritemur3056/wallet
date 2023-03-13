@@ -11,6 +11,7 @@ import Login from "./pages/Login";
 import ListWalletsPage from "./pages/ListWalletsPage";
 import CreateDepositPage from "./pages/CreateDepositPage";
 import CreateTransferPage from "./pages/CreateTransferPage";
+import CreateWalletPage from "./pages/CreateWalletPage";
 
 
 const router = createBrowserRouter([
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
     {
         path: "/wallets/:id",
         element: <ListTransactionsPage />,
+    },
+    {
+        path: "/wallets/add",
+        element: <CreateWalletPage />,
     },
     {
         path: "/wallets/:id/deposit",
