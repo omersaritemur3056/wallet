@@ -5,19 +5,17 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HeaderMenu from "./components/HeaderMenu";
-import { Container } from "react-bootstrap";
+import {Container} from "react-bootstrap";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-    <React.StrictMode>
-        <div className="App">
-            <HeaderMenu />
-            <Container>
-                <App />
-            </Container>
-        </div>
-    </React.StrictMode>
+    <div className="App">
+        <HeaderMenu/>
+        <Container>
+            <App/>
+        </Container>
+    </div>
 );
 
 // If you want to start measuring performance in your app, pass a function

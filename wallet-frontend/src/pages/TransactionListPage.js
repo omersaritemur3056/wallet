@@ -4,7 +4,7 @@ import HttpRequestUtil from "../utilities/HttpRequestUtil";
 import {Table} from "react-bootstrap";
 
 
-const ListTransactionsPage = () => {
+const TransactionListPage = () => {
     const {id} = useParams();
     const [transactions, setTransactions] = useState([]);
 
@@ -51,4 +51,4 @@ const ListTransactionsPage = () => {
     )
 }
 
-export default ListTransactionsPage
+export default TransactionListPage

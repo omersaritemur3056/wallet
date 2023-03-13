@@ -1,4 +1,4 @@
-package com.wallet.walletservice;
+package com.wallet.walletservice.configuration;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -6,7 +6,9 @@ const HttpRequestUtil = axios.create({
     baseURL: "http://localhost:9899",
     headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer " + token
+        "Accept": "application/json",
+        "Authorization": "Bearer " + token,
+        "Access-Control-Allow-Origin": "*",
     },
 });
 

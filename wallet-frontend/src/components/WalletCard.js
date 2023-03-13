@@ -21,7 +21,7 @@ function WalletCard(props) {
     return (<Col md={4} sm={6} sx={12}>
             <Card className={'mt-3'}>
                 <Card.Header>
-                    <Link className={'text-decoration-none'} to={`/wallets/${props.id}`}>Show Transactions</Link>
+                    <Link className={'text-decoration-none'} to={`/wallets/${props.id}`}>{props.id} -> Show Transactions</Link>
                 </Card.Header>
                 <Card.Body>
                     <Card.Title>{props.name}</Card.Title>
