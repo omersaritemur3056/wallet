@@ -10,12 +10,12 @@ function HeaderMenu() {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link href="/wallets">Dashboard</Nav.Link>
                         <Nav.Link href="/wallets/add">Create Wallet</Nav.Link>
                     </Nav>
                     <Nav>
-                        <Nav.Link eventKey={2} href="/login">
-                            Welcome - User
+
+                        <Nav.Link>
+                            <span style={{color: "gray", lineHeight: "38px" }}>Welcome</span> <b>Foo Bar</b>
                         </Nav.Link>
                     </Nav>
                 </Navbar.Collapse>

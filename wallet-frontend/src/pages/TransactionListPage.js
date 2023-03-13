@@ -34,9 +34,14 @@ const TransactionListPage = () => {
                 {transactions?.map((transaction, index) => {
                     return (
                         <tr key={index}>
-                            <td>{index}</td>
+                            <td>{index+1}</td>
                             <td>{transaction.transactionId}</td>
-                            <td>{transaction.createdAt}</td>
+                            <td>{new Intl.DateTimeFormat('en-US',
+                                {
+                                    year: 'numeric', month: '2-digit',day: '2-digit',
+                                    hour: '2-digit', minute: '2-digit', second: '2-digit'
+                                })
+                                .format(transaction.createdAt)}</td>
                             <td>{transaction.amount}</td>
                             <td>{transaction.description}</td>
                             <td>{transaction.transactionStatus}</td>
