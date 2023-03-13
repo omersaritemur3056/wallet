@@ -43,7 +43,6 @@ const CreateWithdrawPage = () => {
                         <Form.Control value={amount}
                                       onChange={(e) => setAmount(e.target.value)}
                                       type="number"
-                                      pattern="/^[0-9]+$/gm"
                                       min={0}
                                       className="form-control text-capitalize"
                                       placeholder="0"/>
@@ -55,6 +54,7 @@ const CreateWithdrawPage = () => {
                         <Form.Control value={description}
                                       onChange={(e) => setDescription(e.target.value)}
                                       type="text"
+                                      as="textarea"
                                       min={0}
                                       className="form-control text-capitalize"
                                       placeholder="Description"/>

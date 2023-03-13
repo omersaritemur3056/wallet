@@ -77,6 +77,7 @@ const CreateTransferPage = () => {
                         <Form.Control value={description}
                                       onChange={(e) => setDescription(e.target.value)}
                                       type="text"
+                                      as="textarea"
                                       min={0}
                                       className="form-control text-capitalize"
                                       placeholder="Description"/>
