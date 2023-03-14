@@ -40,7 +40,7 @@ class WalletServiceImplTest {
         expectedWallet.setId(1L);
         expectedWallet.setName(WalletNameGenerator.generate());
         expectedWallet.setCreatedAt(new Date());
-        expectedWallet.setBalance(BigDecimal.valueOf(100));
+        expectedWallet.setBalance(BigDecimal.ONE);
         given(walletRepository.save(any())).willReturn(expectedWallet);
 
         // when - action or the behaviour that we are going test

@@ -29,6 +29,10 @@ public class WalletTransactionServiceImpl implements WalletTransactionService {
     @Transactional
     @Override
     public WalletTransaction create(WalletTransaction walletTransaction) {
+        if(walletTransaction.getTransactionType() == null) {
+            throw new TransactionRequestNotValidException();
+        }
+
         switch (walletTransaction.getTransactionType()) {
             case TRANSFER -> doTransfer(walletTransaction);
             case WITHDRAW -> doWithdraw(walletTransaction);
@@ -87,24 +91,6 @@ public class WalletTransactionServiceImpl implements WalletTransactionService {
         walletTransaction.setTransactionStatus(COMPLETED);
     }
 
-    private void validateSenderWallet(WalletTransaction walletTransaction) {
-        if(walletTransaction.getSenderWallet() == null || walletTransaction.getSenderWallet().getId() == null)  {
-            throw new TransactionRequestNotValidException();
-        }
-    }
-
-    private void validateReceiverWallet(WalletTransaction walletTransaction) {
-        if(walletTransaction.getReceiverWallet() == null || walletTransaction.getReceiverWallet().getId() == null)  {
-            throw new TransactionRequestNotValidException();
-        }
-    }
-
-    private void validateAmount(BigDecimal amount) {
-        if(amount == null || amount.compareTo(BigDecimal.ZERO) < 0) {
-            throw new TransactionRequestNotValidException();
-        }
-    }
-
     private void doTransfer(WalletTransaction walletTransaction) {
         validateSenderWallet(walletTransaction);
         validateReceiverWallet(walletTransaction);
@@ -133,4 +119,23 @@ public class WalletTransactionServiceImpl implements WalletTransactionService {
         log.info("Transfer operation succeeded with transactionId -> [{}]", walletTransaction.getTransactionId());
         walletTransaction.setTransactionStatus(COMPLETED);
     }
+
+    private void validateSenderWallet(WalletTransaction walletTransaction) {
+        if(walletTransaction.getSenderWallet() == null || walletTransaction.getSenderWallet().getId() == null)  {
+            throw new TransactionRequestNotValidException();
+        }
+    }
+
+    private void validateReceiverWallet(WalletTransaction walletTransaction) {
+        if(walletTransaction.getReceiverWallet() == null || walletTransaction.getReceiverWallet().getId() == null)  {
+            throw new TransactionRequestNotValidException();
+        }
+    }
+
+    private void validateAmount(BigDecimal amount) {
+        if(amount == null || amount.compareTo(BigDecimal.ZERO) < 0) {
+            throw new TransactionRequestNotValidException();
+        }
+    }
+
 }
