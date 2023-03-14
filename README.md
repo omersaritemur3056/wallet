@@ -1,7 +1,7 @@
 # E - Wallet Application
 
 ## Run Setup
-- Follow the steps below in order to run project in local:
+- Follow the steps below in order to run the project in local:
 1. Go to /docker directory
    - Run ```docker compose up``` command in it.
 2. Go to /db directory and run the files below.
@@ -22,6 +22,7 @@
 ---
 ## App Showcase
 
+![Wallet Service API](https://github.com/semih/wallet/blob/main/documentation/wallet-service-api.png)
 ![Initialization Page](https://github.com/semih/wallet/blob/main/documentation/initialization-page.png)
 ![Wallet List](https://github.com/semih/wallet/blob/main/documentation/wallets.png)
 ![Wallet Transactions](https://github.com/semih/wallet/blob/main/documentation/wallet-transactions.png)
