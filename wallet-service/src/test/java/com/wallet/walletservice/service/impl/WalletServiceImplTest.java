@@ -1,4 +1,4 @@
-package com.wallet.walletservice.service;
+package com.wallet.walletservice.service.impl;
 
 import com.wallet.core.exception.EntityNotFoundException;
 import com.wallet.core.model.Wallet;

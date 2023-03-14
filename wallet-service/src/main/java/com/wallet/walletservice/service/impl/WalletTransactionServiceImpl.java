@@ -1,9 +1,12 @@
 package com.wallet.walletservice.service.impl;
 
+import com.wallet.core.exception.EntityNotFoundException;
 import com.wallet.core.model.WalletTransaction;
 import com.wallet.walletservice.exception.InsufficientBalanceException;
 import com.wallet.walletservice.exception.TransactionRequestNotValidException;
+import com.wallet.walletservice.exception.WalletDeleteException;
 import com.wallet.walletservice.exception.WalletNotFoundException;
+import com.wallet.walletservice.exception.WalletTransactionNotFoundException;
 import com.wallet.walletservice.repository.WalletTransactionRepository;
 import com.wallet.walletservice.service.WalletService;
 import com.wallet.walletservice.service.WalletTransactionService;
@@ -43,7 +46,8 @@ public class WalletTransactionServiceImpl implements WalletTransactionService {
 
     @Override
     public void delete(Long id) {
-        walletTransactionRepository.deleteById(id);
+        var walletTransaction = getWalletTransaction(id);
+        walletTransactionRepository.deleteById(walletTransaction.getId());
     }
 
     @Override
@@ -138,4 +142,8 @@ public class WalletTransactionServiceImpl implements WalletTransactionService {
         }
     }
 
+    private WalletTransaction getWalletTransaction(Long id) {
+        return walletTransactionRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Wallet transaction not found with id -> " + id));
+    }
 }
