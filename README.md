@@ -16,6 +16,23 @@
    - npm install
    - npm start
 
+---
+- When logging into the application, a wallet is created by clicking on the "Create Wallet" link. 
+- To view all wallets, go to the home page, after a wallet record is created.   
+---
+## App Showcase
+
+![Initialization Page](https://github.com/semih/wallet/blob/main/documentation/initialization-page.png)
+![Wallet List](https://github.com/semih/wallet/blob/main/documentation/wallets.png)
+![Wallet Transactions](https://github.com/semih/wallet/blob/main/documentation/wallet-transactions.png)
+![Add Wallet](https://github.com/semih/wallet/blob/main/documentation/add-wallet.png)
+![Deposit](https://github.com/semih/wallet/blob/main/documentation/deposit.png)
+![Withdraw](https://github.com/semih/wallet/blob/main/documentation/withdraw.png)
+![Deposit](https://github.com/semih/wallet/blob/main/documentation/deposit.png)
+![Transfer](https://github.com/semih/wallet/blob/main/documentation/transfer.png)
+
+## Request Examples
+
 ```
 {
    "transactionId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -50,14 +67,3 @@
    }
 }
 ```
-
-## App Showcase
-
-![Initialization Page](https://github.com/semih/wallet/blob/main/documentation/initialization-page.png)
-![Wallet List](https://github.com/semih/wallet/blob/main/documentation/wallets.png)
-![Wallet Transactions](https://github.com/semih/wallet/blob/main/documentation/wallet-transactions.png)
-![Add Wallet](https://github.com/semih/wallet/blob/main/documentation/add-wallet.png)
-![Deposit](https://github.com/semih/wallet/blob/main/documentation/deposit.png)
-![Withdraw](https://github.com/semih/wallet/blob/main/documentation/withdraw.png)
-![Deposit](https://github.com/semih/wallet/blob/main/documentation/deposit.png)
-![Transfer](https://github.com/semih/wallet/blob/main/documentation/transfer.png)

@@ -11,10 +11,7 @@ const handleClick = (event, id) => {
             window.location.reload();
             window.alert("Wallet " + id + " deleted successfully.")
         }).catch((error) => {
-        // TODO: Exception message is going to be handle.
-        error = "Balance Error!";
-        console.log("error while deleting: ", error)
-        window.alert(error);
+        window.alert("Not allowed to delete this wallet with a non-zero balance!");
     })
 }
 
@@ -22,7 +19,8 @@ function WalletCard(props) {
     return (<Col md={4} sm={6} sx={12}>
             <Card className={'mt-3'}>
                 <Card.Header>
-                    <Link className={'text-decoration-none'} to={`/wallets/${props.id}`}>{props.id} -> Show Transactions</Link>
+                    <Link className={'text-decoration-none'} to={`/wallets/${props.id}`}>{props.id} -> Show
+                        Transactions</Link>
                 </Card.Header>
                 <Card.Body>
                     <Card.Title>{props.name}</Card.Title>
