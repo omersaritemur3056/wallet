@@ -39,8 +39,8 @@ public class Wallet {
     @Column(insertable = false)
     private Date updatedAt;
 
-    @Column(insertable = false)
-    private boolean deleted;
+    @Column(nullable = false)
+    private boolean deleted = false;
 
     @ManyToOne
     private User user;

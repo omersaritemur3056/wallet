@@ -1,7 +1,7 @@
 version: '3'
 services:
   postgres:
-    container_name: postgres-ewallet
+    container_name: postgres-e-wallet
     image: postgres:14.3-alpine
     restart: always
     deploy:
@@ -15,9 +15,10 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      PGDATA: /var/lib/postgresql/data/pgdata/ewallet
+      PGDATA: /var/lib/postgresql/data/e-wallet
     volumes:
-      - ./ewallet-init.sh:/docker-entrypoint-initdb.d/ewallet-init.sh
-      - /Users/solvia/application/postgre/ewallet:/var/lib/postgresql/data
+      - e-wallet:/var/lib/postgresql/data
     ports:
       - 5435:5432
+volumes:
+  e-wallet:

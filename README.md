@@ -7,8 +7,14 @@
 2. Go to /db directory and run the files below.
    - Run the scripts in the e-wallet_ddl.sql file to create the schema and tables. 
    - Run the scripts in the e-wallet_dml.sql file to insert the data necessary for the application to run.
-
-   
+3. Build the project in the current directory.
+   - ```mvn clean install```
+   - Run ```docker compose up``` command in it.
+4. Go to the wallet-service module and run the jar file under the target file.
+   - java -jar target/wallet-service-1.0.0.jar
+5. Go to the wallet-frontend module and run the npm commands below.
+   - npm install
+   - npm start
 
 ```
 {
@@ -44,3 +50,14 @@
    }
 }
 ```
+
+## App Showcase
+
+![Initialization Page](https://github.com/semih/wallet/blob/main/documentation/initialization-page.png)
+![Wallet List](https://github.com/semih/wallet/blob/main/documentation/wallets.png)
+![Wallet Transactions](https://github.com/semih/wallet/blob/main/documentation/wallet-transactions.png)
+![Add Wallet](https://github.com/semih/wallet/blob/main/documentation/add-wallet.png)
+![Deposit](https://github.com/semih/wallet/blob/main/documentation/deposit.png)
+![Withdraw](https://github.com/semih/wallet/blob/main/documentation/withdraw.png)
+![Deposit](https://github.com/semih/wallet/blob/main/documentation/deposit.png)
+![Transfer](https://github.com/semih/wallet/blob/main/documentation/transfer.png)

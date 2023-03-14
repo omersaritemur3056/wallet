@@ -76,8 +76,3 @@ create table public.wallet_transaction
 
 alter table public.wallet_transaction
     owner to postgres;
-
-
-
-alter table public.wallet_transaction
-    owner to postgres;

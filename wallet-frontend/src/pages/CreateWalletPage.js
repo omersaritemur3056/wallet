@@ -20,10 +20,6 @@ const CreateWalletPage = () => {
         }
     }
 
-    const handleChangeBalance = (e) => {
-        setBalance(e.target.value);
-    };
-
     return (
         <Row className={'mt-5 justify-content-md-center'}>
             <Col md={4}>
@@ -34,7 +30,7 @@ const CreateWalletPage = () => {
                     <InputGroup className="mb-3">
                         <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
                         <Form.Control value={balance}
-                                      onChange={handleChangeBalance}
+                                      onChange={(e) => setBalance(e.target.value)}
                                       type="number"
                                       min={0}
                                       className="form-control text-capitalize"
