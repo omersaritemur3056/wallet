@@ -6,7 +6,7 @@ import com.wallet.core.model.Wallet;
 import com.wallet.core.model.WalletTransaction;
 import com.wallet.walletservice.exception.InsufficientBalanceException;
 import com.wallet.walletservice.exception.TransactionRequestNotValidException;
-import com.wallet.walletservice.helper.WalletNameGenerator;
+import com.wallet.walletservice.exception.WalletNotFoundException;
 import com.wallet.walletservice.repository.WalletTransactionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Optional;
+import java.util.List;
 import java.util.UUID;
 
 import static com.wallet.core.enums.TransactionType.DEPOSIT;
@@ -28,7 +28,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
@@ -43,7 +42,6 @@ class WalletTransactionServiceImplTest {
     private WalletServiceImpl walletService;
     @Mock
     private WalletTransactionRepository walletTransactionRepository;
-
     private Wallet receiverWallet;
     private Wallet senderWallet;
 
@@ -135,6 +133,39 @@ class WalletTransactionServiceImplTest {
     }
 
     @Test
+    void givenWalletTransactionDepositWitAmountIsEqualAndLessThanZero_whenCreate_thenThrowTransactionRequestNotValidException() {
+        // given - precondition or setup
+        var expectedWalletTransaction = new WalletTransaction();
+        expectedWalletTransaction.setId(1L);
+        expectedWalletTransaction.setTransactionType(DEPOSIT);
+        expectedWalletTransaction.setReceiverWallet(receiverWallet);
+        expectedWalletTransaction.setAmount(BigDecimal.ZERO);
+
+        // when - action or the behaviour that we are going test
+        Executable actual = () -> walletTransactionService.create(expectedWalletTransaction);
+
+        // then - verify the output
+        assertThrows(TransactionRequestNotValidException.class, actual);
+        verify(walletTransactionRepository, times(0)).save(any());
+    }
+
+    @Test
+    void givenWalletTransactionDeposit_whenCreate_thenThrowWalletNotFoundException() {
+        // given - precondition or setup
+        var expectedWalletTransaction = new WalletTransaction();
+        expectedWalletTransaction.setReceiverWallet(receiverWallet);
+        expectedWalletTransaction.setAmount(BigDecimal.ONE);
+        expectedWalletTransaction.setTransactionType(TransactionType.DEPOSIT);
+
+        // when - action or the behaviour that we are going test
+        Executable actual = () -> walletTransactionService.create(expectedWalletTransaction);
+
+        // then - verify the output
+        assertThrows(WalletNotFoundException.class, actual);
+        verify(walletTransactionRepository, times(0)).save(any());
+    }
+
+    @Test
     void givenWalletTransactionWithdraw_whenCreate_thenReturnSuccess() {
         // given - precondition or setup
         var expectedWalletTransaction = new WalletTransaction();
@@ -219,6 +250,39 @@ class WalletTransactionServiceImplTest {
 
         // then - verify the output
         assertThrows(TransactionRequestNotValidException.class, actual);
+        verify(walletTransactionRepository, times(0)).save(any());
+    }
+
+    @Test
+    void givenWalletTransactionWithdrawWitAmountIsEqualAndLessThanZero_whenCreate_thenThrowTransactionRequestNotValidException() {
+        // given - precondition or setup
+        var expectedWalletTransaction = new WalletTransaction();
+        expectedWalletTransaction.setId(1L);
+        expectedWalletTransaction.setTransactionType(WITHDRAW);
+        expectedWalletTransaction.setSenderWallet(senderWallet);
+        expectedWalletTransaction.setAmount(BigDecimal.ZERO);
+
+        // when - action or the behaviour that we are going test
+        Executable actual = () -> walletTransactionService.create(expectedWalletTransaction);
+
+        // then - verify the output
+        assertThrows(TransactionRequestNotValidException.class, actual);
+        verify(walletTransactionRepository, times(0)).save(any());
+    }
+
+    @Test
+    void givenWalletTransactionWithdraw_whenCreate_thenThrowWalletNotFoundException() {
+        // given - precondition or setup
+        var expectedWalletTransaction = new WalletTransaction();
+        expectedWalletTransaction.setSenderWallet(senderWallet);
+        expectedWalletTransaction.setAmount(BigDecimal.ONE);
+        expectedWalletTransaction.setTransactionType(WITHDRAW);
+
+        // when - action or the behaviour that we are going test
+        Executable actual = () -> walletTransactionService.create(expectedWalletTransaction);
+
+        // then - verify the output
+        assertThrows(WalletNotFoundException.class, actual);
         verify(walletTransactionRepository, times(0)).save(any());
     }
 
@@ -348,16 +412,102 @@ class WalletTransactionServiceImplTest {
     }
 
     @Test
-    void givenWalletTransactionId_whenDelete_thenReturnSuccess() {
+    void givenWalletTransactionTransferWitAmountIsEqualAndLessThanZero_whenCreate_thenThrowTransactionRequestNotValidException() {
         // given - precondition or setup
         var expectedWalletTransaction = new WalletTransaction();
         expectedWalletTransaction.setId(1L);
-        given(walletTransactionRepository.findById(anyLong())).willReturn(Optional.of(expectedWalletTransaction));
+        expectedWalletTransaction.setTransactionType(TRANSFER);
+        expectedWalletTransaction.setSenderWallet(senderWallet);
+        expectedWalletTransaction.setReceiverWallet(receiverWallet);
+        expectedWalletTransaction.setAmount(BigDecimal.ZERO);
 
         // when - action or the behaviour that we are going test
-        walletTransactionService.delete(expectedWalletTransaction.getId());
+        Executable actual = () -> walletTransactionService.create(expectedWalletTransaction);
 
         // then - verify the output
-        verify(walletTransactionRepository).deleteById(anyLong());
+        assertThrows(TransactionRequestNotValidException.class, actual);
+        verify(walletTransactionRepository, times(0)).save(any());
+    }
+
+    @Test
+    void givenWalletTransactionTransfer_whenCreate_thenThrowWalletNotFoundException() {
+        // given - precondition or setup
+        var expectedWalletTransaction = new WalletTransaction();
+        expectedWalletTransaction.setSenderWallet(senderWallet);
+        expectedWalletTransaction.setReceiverWallet(receiverWallet);
+        expectedWalletTransaction.setAmount(BigDecimal.ONE);
+        expectedWalletTransaction.setTransactionType(TRANSFER);
+        given(walletService.find(senderWallet.getId())).willReturn(senderWallet);
+
+        // when - action or the behaviour that we are going test
+        Executable actual = () -> walletTransactionService.create(expectedWalletTransaction);
+
+        // then - verify the output
+        assertThrows(WalletNotFoundException.class, actual);
+        verify(walletTransactionRepository, times(0)).save(any());
+    }
+
+    @Test
+    void givenWalletTransactionIsNull_whenCreate_thenThrowTransactionRequestNotValidException() {
+        // when - action or the behaviour that we are going test
+        Executable actual = () -> walletTransactionService.create(null);
+
+        // then - verify the output
+        assertThrows(TransactionRequestNotValidException.class, actual);
+        verify(walletTransactionRepository, times(0)).save(any());
+    }
+
+    @Test
+    void givenWalletTransactionWithTransactionTypeIsNull_whenCreate_thenThrowTransactionRequestNotValidException() {
+        // given - precondition or setup
+        var expectedWalletTransaction = new WalletTransaction();
+        expectedWalletTransaction.setTransactionType(null);
+
+        // when - action or the behaviour that we are going test
+        Executable actual = () -> walletTransactionService.create(expectedWalletTransaction);
+
+        // then - verify the output
+        assertThrows(TransactionRequestNotValidException.class, actual);
+        verify(walletTransactionRepository, times(0)).save(any());
+    }
+
+    @Test
+    void givenWalletId_whenFindAllDebit_thenReturnSuccess() {
+        // given - precondition or setup
+        var expectedWalletTransactionFirst = new WalletTransaction();
+        expectedWalletTransactionFirst.setId(1L);
+        var expectedWalletTransactionSecond = new WalletTransaction();
+        expectedWalletTransactionSecond.setId(2L);
+        var expectedWalletTransaction =
+                List.of(expectedWalletTransactionFirst, expectedWalletTransactionSecond);
+
+        given(walletTransactionRepository.findAllBySenderWalletId(anyLong())).willReturn(expectedWalletTransaction);
+
+        // when - action or the behaviour that we are going test
+        var actualWalletTransaction = walletTransactionService.findAllDebitByWalletId(anyLong());
+
+        // then - verify the output
+        assertNotNull(actualWalletTransaction);
+        verify(walletTransactionRepository).findAllBySenderWalletId(anyLong());
+    }
+
+    @Test
+    void givenWalletId_whenFindAllCredit_thenReturnSuccess() {
+        // given - precondition or setup
+        var expectedWalletTransactionFirst = new WalletTransaction();
+        expectedWalletTransactionFirst.setId(1L);
+        var expectedWalletTransactionSecond = new WalletTransaction();
+        expectedWalletTransactionSecond.setId(2L);
+        var expectedWalletTransaction =
+                List.of(expectedWalletTransactionFirst, expectedWalletTransactionSecond);
+
+        given(walletTransactionRepository.findAllByReceiverWalletId(anyLong())).willReturn(expectedWalletTransaction);
+
+        // when - action or the behaviour that we are going test
+        var actualWalletTransaction = walletTransactionService.findAllCreditByWalletId(anyLong());
+
+        // then - verify the output
+        assertNotNull(actualWalletTransaction);
+        verify(walletTransactionRepository).findAllByReceiverWalletId(anyLong());
     }
 }

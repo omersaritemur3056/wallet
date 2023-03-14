@@ -1,7 +1,6 @@
 package com.wallet.walletservice.service.impl;
 
 import com.wallet.core.exception.EntityNotFoundException;
-import com.wallet.core.model.User;
 import com.wallet.core.model.Wallet;
 import com.wallet.walletservice.exception.TransactionRequestNotValidException;
 import com.wallet.walletservice.exception.WalletBalanceUpdateException;
@@ -68,7 +67,7 @@ public class WalletServiceImpl implements WalletService {
     @Override
     public void withdraw(Long id, BigDecimal amount) {
         var updatedWalletCount = walletRepository.withdraw(id, amount);
-        if(updatedWalletCount.compareTo(0) <= 0) {
+        if(updatedWalletCount != 1) {
             throw new WalletBalanceUpdateException("Withdraw operation not succeeded for wallet id -> " + id);
         }
     }
@@ -76,7 +75,7 @@ public class WalletServiceImpl implements WalletService {
     @Override
     public void deposit(Long id, BigDecimal amount) {
         var updatedWalletCount = walletRepository.deposit(id, amount);
-        if(updatedWalletCount.compareTo(0) <= 0) {
+        if(updatedWalletCount != 1) {
             throw new WalletBalanceUpdateException("Deposit operation not succeeded for wallet id -> " + id);
         }
     }

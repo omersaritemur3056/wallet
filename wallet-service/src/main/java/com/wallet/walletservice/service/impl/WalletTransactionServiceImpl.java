@@ -1,12 +1,9 @@
 package com.wallet.walletservice.service.impl;
 
-import com.wallet.core.exception.EntityNotFoundException;
 import com.wallet.core.model.WalletTransaction;
 import com.wallet.walletservice.exception.InsufficientBalanceException;
 import com.wallet.walletservice.exception.TransactionRequestNotValidException;
-import com.wallet.walletservice.exception.WalletDeleteException;
 import com.wallet.walletservice.exception.WalletNotFoundException;
-import com.wallet.walletservice.exception.WalletTransactionNotFoundException;
 import com.wallet.walletservice.repository.WalletTransactionRepository;
 import com.wallet.walletservice.service.WalletService;
 import com.wallet.walletservice.service.WalletTransactionService;
@@ -32,7 +29,7 @@ public class WalletTransactionServiceImpl implements WalletTransactionService {
     @Transactional
     @Override
     public WalletTransaction create(WalletTransaction walletTransaction) {
-        if(walletTransaction.getTransactionType() == null) {
+        if(walletTransaction == null || walletTransaction.getTransactionType() == null) {
             throw new TransactionRequestNotValidException();
         }
 
@@ -42,12 +39,6 @@ public class WalletTransactionServiceImpl implements WalletTransactionService {
             case DEPOSIT -> doDeposit(walletTransaction);
         }
         return walletTransactionRepository.save(walletTransaction);
-    }
-
-    @Override
-    public void delete(Long id) {
-        var walletTransaction = getWalletTransaction(id);
-        walletTransactionRepository.deleteById(walletTransaction.getId());
     }
 
     @Override
@@ -137,13 +128,8 @@ public class WalletTransactionServiceImpl implements WalletTransactionService {
     }
 
     private void validateAmount(BigDecimal amount) {
-        if(amount == null || amount.compareTo(BigDecimal.ZERO) < 0) {
+        if(amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
             throw new TransactionRequestNotValidException();
         }
-    }
-
-    private WalletTransaction getWalletTransaction(Long id) {
-        return walletTransactionRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Wallet transaction not found with id -> " + id));
     }
 }
