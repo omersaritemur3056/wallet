@@ -474,14 +474,9 @@ class WalletTransactionServiceImplTest {
     @Test
     void givenWalletId_whenFindAllDebit_thenReturnSuccess() {
         // given - precondition or setup
-        var expectedWalletTransactionFirst = new WalletTransaction();
-        expectedWalletTransactionFirst.setId(1L);
-        var expectedWalletTransactionSecond = new WalletTransaction();
-        expectedWalletTransactionSecond.setId(2L);
-        var expectedWalletTransaction =
-                List.of(expectedWalletTransactionFirst, expectedWalletTransactionSecond);
-
-        given(walletTransactionRepository.findAllBySenderWalletId(anyLong())).willReturn(expectedWalletTransaction);
+        var expectedWalletTransaction = new WalletTransaction();
+        expectedWalletTransaction.setId(1L);
+        given(walletTransactionRepository.findAllBySenderWalletId(anyLong())).willReturn(List.of(expectedWalletTransaction));
 
         // when - action or the behaviour that we are going test
         var actualWalletTransaction = walletTransactionService.findAllDebitByWalletId(anyLong());
@@ -494,14 +489,10 @@ class WalletTransactionServiceImplTest {
     @Test
     void givenWalletId_whenFindAllCredit_thenReturnSuccess() {
         // given - precondition or setup
-        var expectedWalletTransactionFirst = new WalletTransaction();
-        expectedWalletTransactionFirst.setId(1L);
-        var expectedWalletTransactionSecond = new WalletTransaction();
-        expectedWalletTransactionSecond.setId(2L);
-        var expectedWalletTransaction =
-                List.of(expectedWalletTransactionFirst, expectedWalletTransactionSecond);
-
-        given(walletTransactionRepository.findAllByReceiverWalletId(anyLong())).willReturn(expectedWalletTransaction);
+        var expectedWalletTransaction = new WalletTransaction();
+        expectedWalletTransaction.setId(1L);
+        given(walletTransactionRepository.findAllByReceiverWalletId(anyLong()))
+                .willReturn(List.of(expectedWalletTransaction));
 
         // when - action or the behaviour that we are going test
         var actualWalletTransaction = walletTransactionService.findAllCreditByWalletId(anyLong());
