@@ -1,13 +1,10 @@
 package com.wallet.walletservice.controller;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wallet.core.enums.TransactionStatus;
 import com.wallet.core.model.Wallet;
 import com.wallet.core.model.WalletTransaction;
 import com.wallet.core.rest.Response;
 import com.wallet.walletservice.service.WalletTransactionService;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -22,12 +19,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.UUID;
 
 import static com.wallet.core.enums.TransactionStatus.COMPLETED;
 import static com.wallet.core.enums.TransactionType.DEPOSIT;
-import static com.wallet.core.enums.TransactionType.TRANSFER;
-import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
