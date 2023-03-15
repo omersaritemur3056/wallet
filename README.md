@@ -7,7 +7,8 @@
 2. Go to /db directory and run the files below.
    - Run the scripts in the **e-wallet_ddl.sql** file to create the schema and tables. 
    - Run the scripts in the **e-wallet_dml.sql** file to insert the data necessary for the application to run.
-3. Build the project in the current directory.
+3. Go to /bom directory and run the ```mvn clean install``` command.
+4. Build the project in the current directory.
    - ```mvn clean install```
    - Run ```docker compose up``` command in it.
 4. Go to the wallet-service module and run the jar file under the target file.

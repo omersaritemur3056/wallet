@@ -22,6 +22,7 @@ import java.util.List;
 
 import static com.wallet.core.enums.TransactionStatus.COMPLETED;
 import static com.wallet.core.enums.TransactionType.DEPOSIT;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -63,7 +64,7 @@ class WalletTransactionControllerTest {
         walletTransaction.setDescription("Deposit Example");
 
         // when - action or the behaviour that we are going test
-        Mockito.when(walletTransactionService.create(Mockito.any())).thenReturn(walletTransaction);
+        given(walletTransactionService.create(Mockito.any())).willReturn(walletTransaction);
         String walletTransactionJson = objectMapper.writeValueAsString(walletTransaction);
         ResponseEntity<Response<WalletTransaction>> expectedResult = ResponseEntity.ok(
                 Response.success(walletTransaction));
@@ -93,7 +94,7 @@ class WalletTransactionControllerTest {
         var walletTransactions = List.of(walletTransaction);
 
         // when - action or the behaviour that we are going test
-        Mockito.when(walletTransactionService.findAllDebitByWalletId(Mockito.any())).thenReturn(walletTransactions);
+        given(walletTransactionService.findAllDebitByWalletId(Mockito.any())).willReturn(walletTransactions);
         String walletTransactionJson = objectMapper.writeValueAsString(List.of(walletTransactions));
         ResponseEntity<Response<List<WalletTransaction>>> expectedResult = ResponseEntity.ok(
                 Response.success(walletTransactions));

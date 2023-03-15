@@ -52,6 +52,12 @@
             <artifactId>commons-text</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>4.2.1</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.e.wallet</groupId>
             <artifactId>core-lib</artifactId>
             <version>${revision}</version>

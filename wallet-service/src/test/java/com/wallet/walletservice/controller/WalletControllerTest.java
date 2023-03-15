@@ -19,6 +19,7 @@ import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -44,7 +45,7 @@ public class WalletControllerTest {
         wallet.setId(1L);
 
         // when - action or the behaviour that we are going test
-        Mockito.when(walletService.create(any())).thenReturn(wallet);
+        given(walletService.create(any())).willReturn(wallet);
         String walletJson = objectMapper.writeValueAsString(wallet);
         ResponseEntity<Response<Wallet>> expectedResult = ResponseEntity.ok(
                 Response.success(wallet));
@@ -68,7 +69,7 @@ public class WalletControllerTest {
         var wallets = List.of(wallet);
 
         // when - action or the behaviour that we are going test
-        Mockito.when(walletService.findAllByUserId(anyLong())).thenReturn(wallets);
+        given(walletService.findAllByUserId(anyLong())).willReturn(wallets);
         String walletJson = objectMapper.writeValueAsString(List.of(wallets));
         ResponseEntity<Response<List<Wallet>>> expectedResult = ResponseEntity.ok(
                 Response.success(wallets));
@@ -107,7 +108,7 @@ public class WalletControllerTest {
         wallet.setId(1L);
 
         // when - action or the behaviour that we are going test
-        Mockito.when(walletService.find(anyLong())).thenReturn(wallet);
+        given(walletService.find(anyLong())).willReturn(wallet);
         String walletJson = objectMapper.writeValueAsString(wallet);
         ResponseEntity<Response<Wallet>> expectedResult = ResponseEntity.ok(
                 Response.success(wallet));
